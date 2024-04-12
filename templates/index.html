@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo App - Fastapi</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </head>
+    <body>
+        <div style="margin-top: 50px;" class="ui container">
+            <h1>
+                <a href="/">
+                    <img class="ui centered medium image" src="{{img_link}}" alt="Fastapi ToDo App">
+                </a>
+            </h1>
+<!--            <form class="ui form" action="/items/new" method="post">-->
+<!--                <div class="field">-->
+<!--                    <label>Todo Title</label>-->
+<!--                    <input type="text" name="task_data" placeholder="Enter ToDo task...">-->
+<!--                    <br>-->
+<!--                </div>-->
+<!--                <button class="ui blue button" type="submit">Add</button>-->
+<!--            </form>-->
+            <form class="ui form" action="/items/new" method="post" enctype="multipart/form-data">
+                <div class="field">
+                <label>Video Upload</label>
+                <input type="file" name="video" placeholder="Enter ToDo task...">
+                <br>
+                </div>
+                <button class="ui blue button" type="submit">Add</button>
+            </form>
+            <br>
+            <form class="ui form" method="get" action="/items{{todo_id}}">
+                <div class="field">
+                    <input type="text" name="todo_id" placeholder="Enter ToDo id...">
+                </div>
+                <button class="ui blue button" type="submit">Find</button>
+            </form>
+
+            <hr>
+
+            {% for todo in todos %}
+            <div class="ui segment">
+                <a href="/videos/{{ todo.id }}">
+                    <p class="ui big header">{{todo.id}} | {{todo.name}}</p>
+                </a>
+                {% if not todo.completed %}
+                <span class="ui gray label">Not Complete</span>
+                {% else %}
+                <span class="ui green label">Complete</span>
+                {% endif %}
+                <a class="ui blue button" href="/items/edit/{{todo.id}}">Update</a>
+                <a class="ui red button" href="/items/delete/{{todo.id}}">Delete</a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </body>
+</html>
